@@ -1,0 +1,51 @@
+<template>
+    <div class="message" :class="{usermessage: isUserMessage}">
+        <div class="message__time">{{new Date(message.date).toLocaleTimeString()}}</div>
+        <div class="message__body">{{message.body}}</div>
+    </div>
+</template>
+
+<script>
+import { computed } from '@vue/reactivity';
+
+export default {
+    props:{
+        message: {
+            type: Object,
+            required: true,
+        },
+    },
+    computed:{
+        isUserMessage(){
+            return this.message.isUserMessage
+        }
+    }
+}
+</script>
+
+<style>
+.message{
+    max-width: 65%;
+    width: fit-content;
+    padding: 10px;
+    border: 1px solid rgb(0, 0, 0, 0.5);
+    border-radius: 8px;
+    word-break: break-all;
+}
+.message:first-child{
+    margin: auto 0 0 0;
+}
+.message.usermessage{
+    margin: 0 10px 0 auto;
+    background-color: #CAF0F8;
+}
+.message.usermessage .message__time{
+    text-align: right;
+}
+.message__time{
+    font-size: 0.8em;
+    margin-left: auto;
+    user-select: none;
+}
+
+</style>
