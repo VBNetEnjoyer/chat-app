@@ -1,13 +1,11 @@
 <template>
-    <div class="message" :class="{usermessage: isUserMessage}">
+    <div class="message">
         <div class="message__time">{{new Date(message.date).toLocaleTimeString()}}</div>
         <div class="message__body">{{message.body}}</div>
     </div>
 </template>
 
 <script>
-import { computed } from '@vue/reactivity';
-
 export default {
     props:{
         message: {
@@ -15,11 +13,6 @@ export default {
             required: true,
         },
     },
-    computed:{
-        isUserMessage(){
-            return this.message.isUserMessage
-        }
-    }
 }
 </script>
 
@@ -34,6 +27,9 @@ export default {
 }
 .message:first-child{
     margin: auto 0 0 0;
+}
+.message.usermessage:first-child{
+    margin: auto 10px 10px auto;
 }
 .message.usermessage{
     margin: 0 10px 0 auto;

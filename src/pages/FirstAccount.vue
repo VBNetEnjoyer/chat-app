@@ -1,32 +1,20 @@
 <template>
-    <ChatBody :messages="messages" @newMessage="addNewMessage"/>
+    <ChatBody :user="user"/>
 </template>
 
 <script>
 import ChatBody from '../components/ChatBody.vue';
+import AppStorage from "@/model/AppStorage.js"
 
 export default {
     data(){
         return{
-            messages: [
-                {
-                    body: "body",
-                    date: Date.now(),
-                    isUserMessage: false,
-                }
-            ],
-            test: "test"
+            user: AppStorage.data.users[0],
         }
     },
     components:{
         ChatBody,
     },
-    methods:{
-        addNewMessage(message){
-            this.messages.push(message);
-        }
-    }
-
 }
 </script>
 

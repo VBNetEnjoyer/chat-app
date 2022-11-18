@@ -3,8 +3,8 @@
         <div class="header__container">
             <div class="header__body">
                 <nav class="header__nav nav">
-                    <router-link class="nav__link" to="/">First Chat</router-link>
-                    <router-link class="nav__link" to="/second-chat">Second Chat</router-link>
+                    <router-link class="nav__link" to="/">First account</router-link>
+                    <router-link class="nav__link" to="/second-account">Second account</router-link>
                 </nav>
                 <button class="header__btn">Log Out</button>
              </div>

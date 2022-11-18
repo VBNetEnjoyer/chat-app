@@ -12,10 +12,7 @@ export default {
     },
     data(){
         return{
-            users: [
-                {id: 1, login: "admin", password: "admin", username: "Admin", messages:[]},
-                {id: 2, login: "admin2", password: "admin2", username: "Second Admin", messages:[]},
-            ],
+            
         }
     }
 }

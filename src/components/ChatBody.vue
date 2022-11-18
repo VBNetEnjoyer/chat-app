@@ -4,25 +4,11 @@
             <div class="page__body">
                 <div class="page__leftside">
                     <div class="page__contacts-box">
-                        <!-- <div class="contact">
-                             <div class="contact__avatar">
-                                <img src="./avatar.svg" alt="">
-                            </div>
-                            <div class="contact__info">
-                                <div class="contact__name">Admin 1</div>
-                                <div class="contact__status">offline</div>
-                            </div>
-                        </div> -->
+                        <contact-card v-for="contact in contacts" :contact="contact" :key="contact.id"/>
                     </div>
                  </div>
                 <div class="page__rightside">
-                    <div class="page__chat-box">
-                        <message-card v-for="msg in messages" :message=msg :key="msg.date"/>
-                    </div>
-                    <form action="#">
-                        <textarea placeholder="write message" rows="1" v-model="message" @keydown.enter.prevent="sendMessage"/>
-                        <button @click.prevent="sendMessage">SEND</button>
-                    </form>
+                    <chat-box :authUserId="user.id" :chatId="2224"/>
                 </div>
             </div>
         </div>
@@ -30,33 +16,23 @@
 </template>
 
 <script>
-import MessageCard from './MessageCard.vue';
+import ChatBox from '@/components/ChatBox.vue';
+import ContactCard from './ContactCard.vue';
+import AppStorage from "@/model/AppStorage.js";
 
 export default {
     components:{
-        MessageCard
+        ChatBox, ContactCard
     },
     props:{
-        messages:{
-            type: Array,
-            required: true 
+        user:{
+            type: Object,
+            required: true,
         }
     },
-    data(){
-        return{
-            message: "",
-        }
-    },
-    methods:{
-        sendMessage(){
-            if(this.message == "") return
-            let msg = {
-                body: this.message,
-                date: Date.now(),
-                isUserMessage: true,
-            };
-            this.message = "";
-            this.$emit("newMessage", msg);
+    computed:{
+        contacts(){
+            return [...this.user.contacts].map(id => AppStorage.getUserById(id));
         }
     },
     
@@ -88,32 +64,4 @@ export default {
     display: flex;
     flex-direction: column;
 }
-.page__chat-box{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    border-bottom: 1px solid rgb(0, 0, 0);
-    overflow-y: auto;
-}
-.page__chat-box>*{
-    margin-bottom: 10px;
-}
-
-form{
-    padding: 10px 0px;
-    display: flex;
-}
-input{
-    flex: 1 1 auto;
-    resize: none;
-}
-textarea{
-    flex: 1 1 auto;
-    padding: 10px;
-    resize: none;
-}
-form button{
-    padding: 0px 20px;
-}
-
 </style>
