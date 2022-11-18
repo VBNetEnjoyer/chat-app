@@ -6,7 +6,7 @@
                     <router-link class="nav__link" to="/">First account</router-link>
                     <router-link class="nav__link" to="/second-account">Second account</router-link>
                 </nav>
-                <button class="header__btn">Log Out</button>
+                <button class="header__btn" @click="$emit('onLogOutClick')">Log Out</button>
              </div>
         </div>
      </header>

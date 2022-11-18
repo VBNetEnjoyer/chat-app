@@ -52,16 +52,15 @@ export default {
                 this.chatId = this.user.userChats.map(el => choosenContact.userChats.find(secondEl => secondEl == el))
                                 .filter(el => typeof el !== "undefined")[0]
             } else {
-                console.log("нет совпадений");
+               this.chatId = AppStorage.createNewChat(this.user.id, choosenContact.id);
+
             }
         },
         changeContactNode(element){
-            if(this.$refs.contactsNode.isArray){
-                this.$refs.contactsNode.forEach(el => {
-                    el.classList.remove("active")
-                });
-            }
-            element.classList.add("active")
+            this.$refs.contactsNode.forEach(el => {
+                el.$el.classList.remove("active");
+            });
+            element.classList.add("active");
         }
     },
     mounted(){

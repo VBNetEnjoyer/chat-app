@@ -1,6 +1,6 @@
 <template>
-    <AppHeader class="header"/>
-    <router-view class="page"/>
+    <AppHeader @onLogOutClick="onLogOutClick" class="header"/>
+    <router-view class="page" :logOut="logOut"/>
 </template>
 
 <script>
@@ -12,9 +12,15 @@ export default {
     },
     data(){
         return{
-            
+            logOut: false,
+        }
+    },
+    methods:{
+        onLogOutClick(){
+            this.logOut = true;
         }
     }
+    
 }
 </script>
 

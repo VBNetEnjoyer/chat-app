@@ -1,20 +1,55 @@
 <template>
-    <ChatBody :user="user"/>
+    <Authorization v-if="!authorizated" @succesfullAuth="succesfullAuth"/>
+    <ChatBody :user="user" v-else/>
 </template>
 
 <script>
 import ChatBody from '../components/ChatBody.vue';
-import AppStorage from "@/model/AppStorage.js"
+import AppStorage from "@/model/AppStorage.js";
+import Authorization from '@/components/Authorization.vue';
 
 export default {
+    props:{
+        logOut:{
+            type: Boolean,
+        }
+    },
     data(){
         return{
-            user: AppStorage.data.users[0],
+            data: AppStorage.data,
+            authorizated: false,
+            user: null
         }
     },
     components:{
-        ChatBody,
+        ChatBody, Authorization
     },
+    methods:{
+        succesfullAuth(user){
+            this.authorizated = true;
+            AppStorage.updateFirstPageAuth(user.id)
+            this.user = this.getUser();
+        },
+        getUser(){
+            if(this.data.firstPage.authUserId !== null){
+                this.authorizated = true;
+                return AppStorage.getUserById(this.data.firstPage.authUserId);
+            } else {
+                return null
+            }
+        },
+    },
+    created(){
+        this.user = this.getUser()
+    },
+    watch:{
+        logOut(newValue, oldValue){
+            if(newValue){
+                this.authorizated = false;
+                AppStorage.logOutFirstPage(this.user.id)
+            }
+        }
+    }
 }
 </script>
 

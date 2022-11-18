@@ -1,5 +1,5 @@
 <template>
-    <div v-show="messages.length>0">
+    <div v-show="messages !== null">
         <div class="page__chat-box" ref="chatBox">
             <message-card
             v-for="msg in messages" :message="msg" :key="msg.date"
@@ -56,7 +56,7 @@ export default {
             setTimeout(()=>{
                 this.scrollToBotton();
             },20)
-            return this.chatId !== "" ? AppStorage.getChatById(this.chatId).messages.sort((a, b)=> a.date - b.date) : []
+            return this.chatId !== "" ? AppStorage.getChatById(this.chatId).messages.sort((a, b)=> a.date - b.date) : null
         },
     },
 
