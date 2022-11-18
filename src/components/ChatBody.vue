@@ -4,12 +4,16 @@
             <div class="page__body">
                 <div class="page__leftside">
                     <div class="page__contacts-box">
-                        <contact-card v-for="contact in contacts" :contact="contact" :key="contact.id"/>
+                        <contact-card
+                        @choosenContact="changeChat"
+                        @choosenContactNode="changeContactNode"
+                        v-for="contact in contacts" :contact="contact" :key="contact.id"
+                        ref="contactsNode"/>
                     </div>
                  </div>
-                <div class="page__rightside">
-                    <chat-box :authUserId="user.id" :chatId="2224"/>
-                </div>
+                <chat-box 
+                class="page__rightside"
+                :authUserId="user.id" :chatId="chatId"/>
             </div>
         </div>
     </main>
@@ -30,11 +34,39 @@ export default {
             required: true,
         }
     },
+    data(){
+        return{
+            chatId: this.changeChat(null)
+        }
+    },
     computed:{
         contacts(){
             return [...this.user.contacts].map(id => AppStorage.getUserById(id));
+        },
+    },
+    methods:{
+        changeChat(choosenContact){
+            if(choosenContact == null) return "";
+            // Проверка на наличие общих чатов
+            if(this.user.userChats.some(el => choosenContact.userChats.some(secondEl => el == secondEl))){
+                this.chatId = this.user.userChats.map(el => choosenContact.userChats.find(secondEl => secondEl == el))
+                                .filter(el => typeof el !== "undefined")[0]
+            } else {
+                console.log("нет совпадений");
+            }
+        },
+        changeContactNode(element){
+            if(this.$refs.contactsNode.isArray){
+                this.$refs.contactsNode.forEach(el => {
+                    el.classList.remove("active")
+                });
+            }
+            element.classList.add("active")
         }
     },
+    mounted(){
+       
+    }
     
 }
 </script>

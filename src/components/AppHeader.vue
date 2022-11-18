@@ -20,9 +20,12 @@ export default {
 
 <style scoped>
 .header{
-    background-color: #00B4D8;
+    background-color: #03045E;
     width: 100%;
     box-shadow: 0 0 5px black;
+}
+.header a {
+    color: #FFF;
 }
 .header__container{
     max-width: 1300px;

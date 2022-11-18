@@ -1,5 +1,7 @@
 <template>
-    <div class="contact">
+    <div 
+    class="contact"
+    @click="$emit('choosenContact', contact), $emit('choosenContactNode', $event.target)">
         <div class="contact__avatar">
             <img src="@/assets/avatar.svg" alt="">
         </div>
@@ -20,11 +22,6 @@ export default {
             required: true,
         }
     },
-    computed:{
-        isOffline(){
-            return this.contact.status
-        }
-    }
 }
 </script>
 
@@ -34,6 +31,7 @@ export default {
     display: flex;
     align-items: center;
     padding: 10px 10px;
+    cursor: pointer;
 }
 .contact__avatar {
     width: 48px;
@@ -73,5 +71,11 @@ export default {
     background-color: grey;
     border-radius: 8px;
 }
-
+.contact:hover{
+    background-color: #CAF0F8;
+}
+.contact.active{
+    background-color: #90E0EF;
+    /* CAF0F8 */
+}
 </style>

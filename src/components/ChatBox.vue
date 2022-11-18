@@ -1,13 +1,15 @@
 <template>
-    <div class="page__chat-box">
-        <message-card
-        v-for="msg in messages" :message="msg" :key="msg.date"
-        :class="{usermessage: msg.ownerId == authUserId}"/>
+    <div v-show="messages.length>0">
+        <div class="page__chat-box" ref="chatBox">
+            <message-card
+            v-for="msg in messages" :message="msg" :key="msg.date"
+            :class="{usermessage: msg.ownerId == authUserId}"/>
+        </div>
+        <form action="#">
+            <textarea placeholder="write message" rows="1" v-model="message" @keydown.enter.prevent="sendMessage"/>
+            <button @click.prevent="sendMessage">SEND</button>
+        </form>       
     </div>
-    <form action="#">
-        <textarea placeholder="write message" rows="1" v-model="message" @keydown.enter.prevent="sendMessage"/>
-        <button @click.prevent="sendMessage">SEND</button>
-    </form>
 </template>
 
 <script>
@@ -29,7 +31,6 @@ export default {
     data(){
         return{
             message: "",
-            messages: AppStorage.getChatById(this.chatId).messages.sort((a, b)=> a.date - b.date)
         }
     },
     methods:{
@@ -42,8 +43,23 @@ export default {
             };
             this.message = "";
             AppStorage.addMessage(this.chatId, msg);
+            setTimeout(()=>{
+                this.scrollToBotton();
+            }, 10)
+        },
+        scrollToBotton(){
+            this.$refs.chatBox.scrollTo(0, this.$refs.chatBox.scrollHeight);
         }
     },
+    computed:{
+        messages(){
+            setTimeout(()=>{
+                this.scrollToBotton();
+            },20)
+            return this.chatId !== "" ? AppStorage.getChatById(this.chatId).messages.sort((a, b)=> a.date - b.date) : []
+        },
+    },
+
 }
 </script>
 

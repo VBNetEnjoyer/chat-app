@@ -35,7 +35,7 @@ export default(()=>{
             ],
             chats: [
                 {
-                    id: 2224,
+                    id: Date.now(),
                     messages:[
                         {
                             ownerId: 0,
