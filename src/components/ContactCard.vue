@@ -1,23 +1,21 @@
 <template>
-    <div 
-    class="contact"
-    @click="$emit('choosenContact', contact), $emit('choosenContactNode', $event.target)">
+    <div class="contact" @click="$emit('choosenContact', contact), $emit('choosenContactNode', $event.target)">
         <div class="contact__avatar">
             <img src="@/assets/avatar.svg" alt="">
         </div>
         <div class="contact__info">
-            <div class="contact__name">{{contact.username}}</div>
-            <div class="contact__status" :class="{offline: !contact.status}">{{
-                contact.status ? "Online" : "Offline"
-            }}</div>
+            <div class="contact__name">{{ contact.username }}</div>
+            <div class="contact__status" :class="{ offline: !contact.status }">
+                {{contact.status ? "Online" : "Offline"}}
+            </div>
         </div>
-    </div>  
+    </div>
 </template>
 
 <script>
 export default {
-    props:{
-        contact:{
+    props: {
+        contact: {
             type: Object,
             required: true,
         }
@@ -33,12 +31,14 @@ export default {
     padding: 10px 10px;
     cursor: pointer;
 }
+
 .contact__avatar {
     width: 48px;
     height: 48px;
     border-radius: 50%;
     overflow: hidden;
 }
+
 .contact__avatar img {
     width: 100%;
     height: 100%;
@@ -47,10 +47,12 @@ export default {
 .contact__info {
     margin-left: 10px;
 }
+
 .contact__status {
     position: relative;
     font-size: 0.8em;
 }
+
 .contact__status::after {
     content: " ";
     position: absolute;
@@ -61,6 +63,7 @@ export default {
     background-color: green;
     border-radius: 8px;
 }
+
 .contact__status.offline::after {
     content: " ";
     position: absolute;
@@ -71,10 +74,12 @@ export default {
     background-color: grey;
     border-radius: 8px;
 }
-.contact:hover{
+
+.contact:hover {
     background-color: #CAF0F8;
 }
-.contact.active{
+
+.contact.active {
     background-color: #90E0EF;
     /* CAF0F8 */
 }
