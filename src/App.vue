@@ -1,6 +1,6 @@
 <template>
     <AppHeader @onLogOutClick="onLogOutClick" class="header"/>
-    <router-view class="page" :logOut="logOut"/>
+    <router-view class="page" :logOut="logOut" @logOut="logOut = falsez"/>
 </template>
 
 <script>

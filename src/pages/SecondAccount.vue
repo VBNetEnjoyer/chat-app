@@ -46,7 +46,8 @@ export default {
         logOut(newValue, oldValue){
             if(newValue){
                 this.authorizated = false;
-                AppStorage.logOutSecondPage(this.user.id)
+                AppStorage.logOutSecondPage(this.user.id);
+                this.$emit('logOut');
             }
         }
     }
