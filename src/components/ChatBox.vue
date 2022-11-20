@@ -14,7 +14,6 @@
 
 <script>
 import MessageCard from '@/components/MessageCard.vue';
-import AppStorage from "@/model/AppStorage.js"
 
 export default {
     components:{
@@ -42,21 +41,20 @@ export default {
                 date: Date.now(),
             };
             this.message = "";
-            AppStorage.addMessage(this.chatId, msg);
-            setTimeout(()=>{
-                this.scrollToBotton();
-            }, 10)
+            this.$storage.addMessage(this.chatId, msg);
+            // this.$nextTick().then(()=> { this.scrollToBottom() });
+            this.scrollToBottom();
         },
-        scrollToBotton(){
+        async scrollToBottom(){
+            await this.$nextTick();
             this.$refs.chatBox.scrollTo(0, this.$refs.chatBox.scrollHeight);
         }
     },
     computed:{
         messages(){
-            setTimeout(()=>{
-                this.scrollToBotton();
-            },20)
-            return this.chatId !== "" ? AppStorage.getChatById(this.chatId).messages.sort((a, b)=> a.date - b.date) : null
+            this.scrollToBottom();
+            // this.$nextTick().then(()=> { this.scrollToBottom() });
+            return this.chatId !== "" ? this.$storage.getChatById(this.chatId).messages.sort((a, b)=> a.date - b.date) : null
         },
     },
 

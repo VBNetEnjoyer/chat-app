@@ -22,7 +22,6 @@
 <script>
 import ChatBox from '@/components/ChatBox.vue';
 import ContactCard from './ContactCard.vue';
-import AppStorage from "@/model/AppStorage.js";
 
 export default {
     components:{
@@ -41,7 +40,7 @@ export default {
     },
     computed:{
         contacts(){
-            return [...this.user.contacts].map(id => AppStorage.getUserById(id));
+            return [...this.user.contacts].map(id => this.$storage.getUserById(id));
         },
     },
     methods:{
@@ -52,7 +51,7 @@ export default {
                 this.chatId = this.user.userChats.map(el => choosenContact.userChats.find(secondEl => secondEl == el))
                                 .filter(el => typeof el !== "undefined")[0]
             } else {
-               this.chatId = AppStorage.createNewChat(this.user.id, choosenContact.id);
+               this.chatId = this.$storage.createNewChat(this.user.id, choosenContact.id);
 
             }
         },

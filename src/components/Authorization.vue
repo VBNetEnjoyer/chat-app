@@ -29,41 +29,39 @@
 </template>
 
 <script>
-import AppStorage from '@/model/AppStorage';
-
 export default {
-    data(){
-        return{
+    data() {
+        return {
             login: "",
             password: "",
-            logins: AppStorage.data.users.map(el => {return el.login}),
-            passwords: AppStorage.data.users.map(el => {return el.password}),
+            logins: this.$storage.data.users.map(el => {return el.login}),
+            passwords: this.$storage.data.users.map(el => {return el.password}),
             isAllert: false
         }
     },
     methods:{
-        onForgotPasswordClick(){
+        onForgotPasswordClick() {
             alert(`
             Logins: ${this.logins}
             Passwords: ${this.passwords}
             `);
         },
-        onLoginClick(){
-            if(!this.logins.some(el => this.login === el)){
+        onLoginClick() {
+            if (!this.logins.some(el => this.login === el)) {
                 this.isAllert = true;
                 return;
             }
 
-            const user = AppStorage.getUserByLogin(this.login);
+            const user = this.$storage.getUserByLogin(this.login);
 
-            if(user.password !== this.password){
+            if (user.password !== this.password) {
                 this.isAllert = true;
                 return;
             }
 
-            if(user.password === this.password && user.login === this.login){
-                if(user.id === AppStorage.data.firstPage.authUserId ||
-                    user.id === AppStorage.data.secondPage.authUserId){
+            if (user.password === this.password && user.login === this.login){
+                if (user.id === this.$storage.data.firstPage.authUserId ||
+                    user.id === this.$storage.data.secondPage.authUserId) {
                         this.isAllert = true;
                         return;
                 }
